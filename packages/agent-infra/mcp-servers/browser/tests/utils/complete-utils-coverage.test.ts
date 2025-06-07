@@ -5,17 +5,17 @@ describe('Complete Utils Coverage Tests', () => {
   describe('parseProxyUrl comprehensive coverage', () => {
     test('should parse HTTPS proxy URL with credentials', () => {
       const result = parseProxyUrl(
-        'https://user:pass@secure-proxy.example.com:443',
+        'https://testuser:testpass@fake-proxy.test:443',
       );
       expect(result).toEqual({
-        username: 'user',
-        password: 'pass',
+        username: 'testuser',
+        password: 'testpass',
       });
     });
 
     test('should parse proxy URL with special characters in credentials', () => {
       const result = parseProxyUrl(
-        'http://user%40domain:p%40ssw0rd@proxy.example.com:8080',
+        'http://user%40domain:p%40ssw0rd@fake-proxy.test:8080',
       );
       expect(result).toEqual({
         username: 'user%40domain',
@@ -24,15 +24,15 @@ describe('Complete Utils Coverage Tests', () => {
     });
 
     test('should handle proxy URL with only username', () => {
-      const result = parseProxyUrl('http://username@proxy.example.com:8080');
+      const result = parseProxyUrl('http://testuser@fake-proxy.test:8080');
       expect(result).toEqual({
-        username: 'username',
+        username: 'testuser',
         password: '',
       });
     });
 
     test('should handle proxy URL with default port', () => {
-      const result = parseProxyUrl('http://proxy.example.com');
+      const result = parseProxyUrl('http://fake-proxy.test');
       expect(result).toEqual({
         username: '',
         password: '',
@@ -40,7 +40,7 @@ describe('Complete Utils Coverage Tests', () => {
     });
 
     test('should handle malformed URL without protocol', () => {
-      const result = parseProxyUrl('proxy.example.com:8080');
+      const result = parseProxyUrl('fake-proxy.test:8080');
       expect(result).toEqual({
         username: '',
         password: '',

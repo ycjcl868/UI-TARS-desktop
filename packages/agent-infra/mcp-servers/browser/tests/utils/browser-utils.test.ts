@@ -173,7 +173,7 @@ describe('Browser Utilities', () => {
       store.globalConfig = {
         ...store.globalConfig,
         launchOptions: {
-          proxy: 'http://testuser:testpass@proxy.example.com:8080',
+          proxy: 'http://testuser:testpass@fake-proxy.test:8080',
         },
       };
 

@@ -48,7 +48,7 @@ describe('Browser Utils Lines Coverage', () => {
       };
       const mockPage2 = {
         isClosed: () => false,
-        url: () => 'http://example.com',
+        url: () => 'http://fake-test.local',
         title: () => 'Example',
         setViewportSize: () => Promise.resolve(),
       };
@@ -71,12 +71,12 @@ describe('Browser Utils Lines Coverage', () => {
       const mockPages = [
         {
           isClosed: () => false,
-          url: () => 'http://example1.com',
+          url: () => 'http://fake-test1.local',
           title: () => 'Example 1',
         },
         {
           isClosed: () => false,
-          url: () => 'http://example2.com',
+          url: () => 'http://fake-test2.local',
           title: () => 'Example 2',
         },
       ];
@@ -112,7 +112,7 @@ describe('Browser Utils Lines Coverage', () => {
       const config: GlobalConfig = {
         launchOptions: {
           headless: true,
-          proxy: 'http://proxy.example.com:8080',
+          proxy: 'http://fake-proxy.test:8080',
         },
       };
 

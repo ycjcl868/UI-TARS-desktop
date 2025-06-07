@@ -64,7 +64,7 @@ describe('Browser Utils Edge Cases Coverage', () => {
             pages: () =>
               Promise.resolve([
                 {
-                  url: () => 'http://example.com',
+                  url: () => 'http://fake-test.local',
                   title: () => 'Example',
                   isClosed: () => false,
                 },
@@ -109,7 +109,7 @@ describe('Browser Utils Edge Cases Coverage', () => {
       const config: GlobalConfig = {
         launchOptions: {
           headless: true,
-          proxy: 'http://username:password@proxy.example.com:8080',
+          proxy: 'http://username:password@fake-proxy.test:8080',
         },
       };
 
@@ -128,7 +128,7 @@ describe('Browser Utils Edge Cases Coverage', () => {
     test('should handle page visibility state checks', async () => {
       const mockPage = {
         isClosed: () => false,
-        url: () => 'http://example.com',
+        url: () => 'http://fake-test.local',
         title: () => 'Example',
         evaluate: (fn: any) => {
           if (fn.toString().includes('visibilityState')) {
@@ -156,7 +156,7 @@ describe('Browser Utils Edge Cases Coverage', () => {
     test('should handle unhealthy pages that need closing', async () => {
       const mockPage = {
         isClosed: () => false,
-        url: () => 'http://example.com',
+        url: () => 'http://fake-test.local',
         title: () => 'Example',
         evaluate: (fn: any) => {
           if (fn.toString().includes('visibilityState')) {

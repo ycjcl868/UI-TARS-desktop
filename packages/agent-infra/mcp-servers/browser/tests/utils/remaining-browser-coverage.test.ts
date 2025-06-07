@@ -76,7 +76,7 @@ describe('Remaining Browser Utils Coverage Tests', () => {
       store.globalConfig = {
         launchOptions: {
           headless: true,
-          proxy: 'http://proxy.example.com:8080',
+          proxy: 'http://fake-proxy.test:8080',
           args: ['--no-sandbox', '--disable-setuid-sandbox'],
         },
       };
