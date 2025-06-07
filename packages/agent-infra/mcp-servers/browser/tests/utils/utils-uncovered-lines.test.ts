@@ -4,7 +4,7 @@ import { parseProxyUrl } from '../../src/utils/utils.js';
 describe('Utils Uncovered Lines Coverage', () => {
   describe('utils.ts line 8 coverage', () => {
     test('should handle parseProxyUrl function', () => {
-      const result = parseProxyUrl('http://fake-proxy.test:8080');
+      const result = parseProxyUrl('http://proxy-server:8080');
       expect(result).toBeDefined();
     });
 
@@ -22,18 +22,18 @@ describe('Utils Uncovered Lines Coverage', () => {
   describe('utils.ts lines 39-74 coverage', () => {
     test('should handle parseProxyUrl with authentication', () => {
       const result = parseProxyUrl(
-        'http://testuser:testpass@fake-proxy.test:8080',
+        'http://testuser:testpass@proxy-server:8080',
       );
       expect(result).toBeDefined();
     });
 
     test('should handle parseProxyUrl with HTTPS', () => {
-      const result = parseProxyUrl('https://fake-proxy.test:443');
+      const result = parseProxyUrl('https://proxy-server:443');
       expect(result).toBeDefined();
     });
 
     test('should handle parseProxyUrl with SOCKS', () => {
-      const result = parseProxyUrl('socks5://fake-proxy.test:1080');
+      const result = parseProxyUrl('socks5://proxy-server:1080');
       expect(result).toBeDefined();
     });
   });

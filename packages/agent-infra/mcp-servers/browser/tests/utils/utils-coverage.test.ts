@@ -5,7 +5,7 @@ describe('Utils Coverage Tests', () => {
   describe('parseProxyUrl function', () => {
     test('should parse proxy URL with username and password', () => {
       const result = parseProxyUrl(
-        'http://username:password@fake-proxy.test:8080',
+        'http://username:password@proxy-server:8080',
       );
       expect(result).toEqual({
         username: 'username',
@@ -14,7 +14,7 @@ describe('Utils Coverage Tests', () => {
     });
 
     test('should parse proxy URL without credentials', () => {
-      const result = parseProxyUrl('http://fake-proxy.test:8080');
+      const result = parseProxyUrl('http://proxy-server:8080');
       expect(result).toEqual({
         username: '',
         password: '',

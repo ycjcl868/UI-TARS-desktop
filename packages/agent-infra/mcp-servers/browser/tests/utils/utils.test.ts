@@ -47,7 +47,7 @@ describe('Utility Functions', () => {
 
   describe('parseProxyUrl', () => {
     test('should parse valid proxy URL with username and password', () => {
-      const result = parseProxyUrl('http://user:pass@fake-proxy.test:8080');
+      const result = parseProxyUrl('http://user:pass@proxy-server:8080');
       expect(result).toEqual({
         username: 'user',
         password: 'pass',
@@ -55,7 +55,7 @@ describe('Utility Functions', () => {
     });
 
     test('should parse proxy URL without credentials', () => {
-      const result = parseProxyUrl('http://fake-proxy.test:8080');
+      const result = parseProxyUrl('http://proxy-server:8080');
       expect(result).toEqual({
         username: '',
         password: '',
@@ -71,7 +71,7 @@ describe('Utility Functions', () => {
     });
 
     test('should parse proxy URL with @ symbol in fallback mode', () => {
-      const result = parseProxyUrl('http://user:pass@fake-proxy.test:8080');
+      const result = parseProxyUrl('http://user:pass@proxy-server:8080');
       expect(result.username).toBe('user');
       expect(result.password).toBe('pass');
     });
@@ -85,7 +85,7 @@ describe('Utility Functions', () => {
     });
 
     test('should handle proxy URL with only username', () => {
-      const result = parseProxyUrl('http://user@fake-proxy.test:8080');
+      const result = parseProxyUrl('http://user@proxy-server:8080');
       expect(result.username).toBe('user');
       expect(result.password).toBe('');
     });
