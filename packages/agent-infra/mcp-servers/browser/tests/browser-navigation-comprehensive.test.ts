@@ -114,6 +114,21 @@ describe('Browser Navigation Comprehensive Tests', () => {
       `);
     });
 
+    app.get('/timeout-test', (req, res) => {
+      setTimeout(() => {
+        res.send(`
+          <!DOCTYPE html>
+          <html>
+            <head><title>Timeout Test Page</title></head>
+            <body>
+              <h1>Response after timeout</h1>
+              <p>This page loads after a 5 second delay</p>
+            </body>
+          </html>
+        `);
+      }, 5000);
+    });
+
     httpServer = app.listen(0);
     const address = httpServer.address() as AddressInfo;
     baseUrl = `http://localhost:${address.port}`;
@@ -378,7 +393,7 @@ describe('Browser Navigation Comprehensive Tests', () => {
       const result = await client.callTool({
         name: 'browser_navigate',
         arguments: {
-          url: 'http://httpstat.us/200?sleep=5000',
+          url: `${baseUrl}/timeout-test`,
         },
       });
       expect(result.isError).toBe(false);
