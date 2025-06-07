@@ -16,7 +16,7 @@ import { AddressInfo } from 'net';
 describe('Browser Navigation Comprehensive Tests', () => {
   let client: Client;
   let app: express.Express;
-  let httpServer: any;
+  let httpServer: ReturnType<typeof app.listen>;
   let baseUrl: string;
 
   beforeAll(async () => {
@@ -325,7 +325,14 @@ describe('Browser Navigation Comprehensive Tests', () => {
         arguments: {},
       });
       expect(result.isError).toBe(false);
-      const links = JSON.parse((result.content as any)[0].text);
+      let links;
+      try {
+        links = JSON.parse((result.content as any)[0].text);
+      } catch (e) {
+        throw new Error(
+          `Failed to parse links as JSON: ${(result.content as any)[0].text}`,
+        );
+      }
       expect(links).toBeInstanceOf(Array);
       expect(links.some((link: any) => link.text === 'About')).toBe(true);
       expect(links.some((link: any) => link.text === 'Contact')).toBe(true);

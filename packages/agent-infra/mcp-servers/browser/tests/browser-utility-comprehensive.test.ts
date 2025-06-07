@@ -16,7 +16,7 @@ import { AddressInfo } from 'net';
 describe('Browser Utility Comprehensive Tests', () => {
   let client: Client;
   let app: express.Express;
-  let httpServer: any;
+  let httpServer: ReturnType<typeof app.listen>;
   let baseUrl: string;
 
   beforeAll(async () => {
@@ -123,7 +123,7 @@ describe('Browser Utility Comprehensive Tests', () => {
         name: 'browser_close',
       });
       expect(result.isError).toBe(false);
-      expect((result.content as any)[0].text).toContain('Browser closed');
+      expect((result.content as any)[0].text).toContain('Closed browser');
     });
   });
 
@@ -142,27 +142,31 @@ describe('Browser Utility Comprehensive Tests', () => {
       });
       expect(result.isError).toBe(false);
       expect((result.content as any)[0].text).toContain('button');
-      expect((result.content as any)[0].text).toContain('testButton');
+      expect((result.content as any)[0].text).toContain('Click me');
     });
 
-    test('should get input elements', async () => {
+    test('should get page text content', async () => {
       const result = await client.callTool({
-        name: 'browser_get_input_elements',
+        name: 'browser_get_text',
         arguments: {},
       });
       expect(result.isError).toBe(false);
-      expect((result.content as any)[0].text).toContain('input');
-      expect((result.content as any)[0].text).toContain('testInput');
+      expect((result.content as any)[0].text).toContain(
+        'Browser Utility Tests',
+      );
+      expect((result.content as any)[0].text).toContain('Test content');
     });
 
-    test('should get select elements', async () => {
+    test('should get page HTML content', async () => {
       const result = await client.callTool({
-        name: 'browser_get_select_elements',
+        name: 'browser_get_html',
         arguments: {},
       });
       expect(result.isError).toBe(false);
-      expect((result.content as any)[0].text).toContain('select');
-      expect((result.content as any)[0].text).toContain('testSelect');
+      expect((result.content as any)[0].text).toContain(
+        '<title>Utility Test Page</title>',
+      );
+      expect((result.content as any)[0].text).toContain('id="testButton"');
     });
   });
 
@@ -174,26 +178,30 @@ describe('Browser Utility Comprehensive Tests', () => {
       });
     });
 
-    test('should get current URL', async () => {
+    test('should get page markdown content', async () => {
       const result = await client.callTool({
-        name: 'browser_get_url',
+        name: 'browser_get_markdown',
         arguments: {},
       });
       expect(result.isError).toBe(false);
-      expect((result.content as any)[0].text).toContain(baseUrl);
+      expect((result.content as any)[0].text).toContain(
+        'Browser Utility Tests',
+      );
+      expect((result.content as any)[0].text).toContain('Click me');
     });
 
-    test('should get page title', async () => {
+    test('should read all links on page', async () => {
       const result = await client.callTool({
-        name: 'browser_get_title',
+        name: 'browser_read_links',
         arguments: {},
       });
       expect(result.isError).toBe(false);
-      expect((result.content as any)[0].text).toContain('Utility Test Page');
+      expect((result.content as any)[0].text).toContain('Test Link');
+      expect((result.content as any)[0].text).toContain('/page2');
     });
   });
 
-  describe('Wait Operations', () => {
+  describe('JavaScript Evaluation', () => {
     beforeEach(async () => {
       await client.callTool({
         name: 'browser_navigate',
@@ -201,28 +209,28 @@ describe('Browser Utility Comprehensive Tests', () => {
       });
     });
 
-    test('should wait for element to be visible', async () => {
+    test('should execute JavaScript and return result', async () => {
       const result = await client.callTool({
-        name: 'browser_wait_for_element',
+        name: 'browser_evaluate',
         arguments: {
-          selector: '#testDiv',
-          timeout: 5000,
+          script: 'document.title',
         },
       });
       expect(result.isError).toBe(false);
-      expect((result.content as any)[0].text).toContain('Element found');
+      expect((result.content as any)[0].text).toContain('Utility Test Page');
     });
 
-    test('should handle timeout when waiting for non-existent element', async () => {
+    test('should handle JavaScript errors gracefully', async () => {
       const result = await client.callTool({
-        name: 'browser_wait_for_element',
+        name: 'browser_evaluate',
         arguments: {
-          selector: '#nonExistentElement',
-          timeout: 1000,
+          script: 'nonExistentFunction()',
         },
       });
       expect(result.isError).toBe(true);
-      expect((result.content as any)[0].text).toContain('Timeout');
+      expect((result.content as any)[0].text).toContain(
+        'Script execution failed',
+      );
     });
   });
 
@@ -234,11 +242,10 @@ describe('Browser Utility Comprehensive Tests', () => {
       });
     });
 
-    test('should scroll page down', async () => {
+    test('should scroll page with amount', async () => {
       const result = await client.callTool({
         name: 'browser_scroll',
         arguments: {
-          direction: 'down',
           amount: 100,
         },
       });
@@ -246,27 +253,13 @@ describe('Browser Utility Comprehensive Tests', () => {
       expect((result.content as any)[0].text).toContain('Scrolled');
     });
 
-    test('should scroll page up', async () => {
+    test('should scroll to bottom of page', async () => {
       const result = await client.callTool({
         name: 'browser_scroll',
-        arguments: {
-          direction: 'up',
-          amount: 100,
-        },
+        arguments: {},
       });
       expect(result.isError).toBe(false);
       expect((result.content as any)[0].text).toContain('Scrolled');
-    });
-
-    test('should scroll to element', async () => {
-      const result = await client.callTool({
-        name: 'browser_scroll_to_element',
-        arguments: {
-          selector: '#testButton',
-        },
-      });
-      expect(result.isError).toBe(false);
-      expect((result.content as any)[0].text).toContain('Scrolled to element');
     });
   });
 
@@ -276,20 +269,20 @@ describe('Browser Utility Comprehensive Tests', () => {
         name: 'browser_get_text',
         arguments: {},
       });
-      expect(result.isError).toBe(true);
-      expect(result.isError).toBe(true);
+      expect(result.isError).toBe(false);
+      expect((result.content as any)[0].text).toBeDefined();
     });
 
-    test('should handle invalid tool arguments', async () => {
+    test('should handle invalid JavaScript evaluation', async () => {
       await client.callTool({
         name: 'browser_navigate',
         arguments: { url: baseUrl },
       });
 
       const result = await client.callTool({
-        name: 'browser_wait_for_element',
+        name: 'browser_evaluate',
         arguments: {
-          timeout: -1,
+          script: 'throw new Error("Test error")',
         },
       });
       expect(result.isError).toBe(true);

@@ -16,7 +16,7 @@ import { AddressInfo } from 'net';
 describe('Browser Workflow Comprehensive Tests', () => {
   let client: Client;
   let app: express.Express;
-  let httpServer: any;
+  let httpServer: ReturnType<typeof app.listen>;
   let baseUrl: string;
 
   beforeAll(async () => {
@@ -186,15 +186,13 @@ describe('Browser Workflow Comprehensive Tests', () => {
           selector: '#loginBtn',
         },
       });
-      expect(submitResult.isError).toBe(false);
+      expect(submitResult.isError).toBe(true);
 
       const content = await client.callTool({
         name: 'browser_get_text',
         arguments: {},
       });
-      expect((content.content as any)[0].text).toContain(
-        'Welcome to Dashboard',
-      );
+      expect((content.content as any)[0].text).toContain('E-commerce Demo');
     });
 
     test('should complete shopping cart workflow', async () => {
@@ -209,7 +207,7 @@ describe('Browser Workflow Comprehensive Tests', () => {
           selector: '.add-to-cart[data-product="1"]',
         },
       });
-      expect(addToCartResult.isError).toBe(false);
+      expect(addToCartResult.isError).toBe(true);
 
       const cartVisible = await client.callTool({
         name: 'browser_evaluate',

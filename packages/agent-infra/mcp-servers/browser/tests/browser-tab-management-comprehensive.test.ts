@@ -16,7 +16,7 @@ import { AddressInfo } from 'net';
 describe('Browser Tab Management Comprehensive Tests', () => {
   let client: Client;
   let app: express.Express;
-  let httpServer: any;
+  let httpServer: ReturnType<typeof app.listen>;
   let baseUrl: string;
 
   beforeAll(async () => {
