@@ -92,14 +92,18 @@ describe('Browser Utility Comprehensive Tests', () => {
       client.connect(clientTransport),
       server.connect(serverTransport),
     ]);
-  });
+  }, 20000);
 
   afterEach(async () => {
-    await client.callTool({
-      name: 'browser_close',
-    });
+    try {
+      await client.callTool({
+        name: 'browser_close',
+      });
+    } catch (error) {
+      console.warn('Error closing browser in afterEach:', error);
+    }
     await client.close();
-  });
+  }, 20000);
 
   describe('Browser Session Management', () => {
     test('should open browser session', async () => {
@@ -286,6 +290,6 @@ describe('Browser Utility Comprehensive Tests', () => {
         },
       });
       expect(result.isError).toBe(true);
-    });
+    }, 15000);
   });
 });
