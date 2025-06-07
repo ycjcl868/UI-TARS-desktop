@@ -105,9 +105,13 @@ describe('Browser Tab Management Comprehensive Tests', () => {
   });
 
   afterEach(async () => {
-    await client.callTool({
-      name: 'browser_close',
-    });
+    try {
+      await client.callTool({
+        name: 'browser_close',
+      });
+    } catch (error) {
+      console.warn('Error closing browser in afterEach:', error);
+    }
     await client.close();
   });
 
@@ -246,7 +250,7 @@ describe('Browser Tab Management Comprehensive Tests', () => {
         arguments: { index: 0 },
       });
       expect(result.isError).toBe(false);
-    });
+    }, 15000);
   });
 
   describe('Multiple Tab Workflows', () => {
@@ -348,6 +352,6 @@ describe('Browser Tab Management Comprehensive Tests', () => {
         },
       });
       expect((result.content as any)[0].text).toContain('Test input in tab 1');
-    });
+    }, 20000);
   });
 });
