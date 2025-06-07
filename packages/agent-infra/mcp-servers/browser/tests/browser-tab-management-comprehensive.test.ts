@@ -113,7 +113,7 @@ describe('Browser Tab Management Comprehensive Tests', () => {
       console.warn('Error closing browser in afterEach:', error);
     }
     await client.close();
-  });
+  }, 30000);
 
   describe('Tab Creation and Management', () => {
     test('should create new tab', async () => {

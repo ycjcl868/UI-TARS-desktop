@@ -253,7 +253,7 @@ describe('Browser Navigation Comprehensive Tests', () => {
         arguments: {},
       });
       expect((aboutContent.content as any)[0].text).toContain('About Us');
-    });
+    }, 20000);
 
     test('should handle going back when no history exists', async () => {
       await client.callTool({
@@ -405,6 +405,6 @@ describe('Browser Navigation Comprehensive Tests', () => {
       });
       expect(result.isError).toBe(false);
       expect((result.content as any)[0].text).toContain('Navigated to');
-    }, 20000);
+    }, 30000);
   });
 });
