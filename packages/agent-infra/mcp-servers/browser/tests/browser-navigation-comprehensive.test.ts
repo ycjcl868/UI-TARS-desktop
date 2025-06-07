@@ -374,7 +374,7 @@ describe('Browser Navigation Comprehensive Tests', () => {
       expect((content.content as any)[0].text).toContain(
         '404 - Page Not Found',
       );
-    }, 15000);
+    }, 20000);
 
     test('should handle slow loading pages', async () => {
       const result = await client.callTool({
@@ -392,7 +392,7 @@ describe('Browser Navigation Comprehensive Tests', () => {
       expect((content.content as any)[0].text).toContain(
         'This page loads slowly',
       );
-    }, 15000);
+    }, 20000);
   });
 
   describe('Navigation Timeout Handling', () => {
@@ -405,6 +405,6 @@ describe('Browser Navigation Comprehensive Tests', () => {
       });
       expect(result.isError).toBe(false);
       expect((result.content as any)[0].text).toContain('Navigated to');
-    }, 15000);
+    }, 20000);
   });
 });

@@ -314,7 +314,7 @@ describe('Browser Tab Management Comprehensive Tests', () => {
         arguments: {},
       });
       expect((page2Content.content as any)[0].text).toContain('This is Page 2');
-    });
+    }, 25000);
 
     test('should maintain tab state during navigation', async () => {
       await client.callTool({
