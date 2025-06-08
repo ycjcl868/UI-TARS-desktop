@@ -38,6 +38,10 @@ export function defineTools<T extends Record<keyof T, ToolDefinition>>(
 export function parseProxyUrl(proxyUrl: string) {
   const result = { username: '', password: '' };
 
+  if (!proxyUrl) {
+    return result;
+  }
+
   try {
     const url = new URL(proxyUrl);
     result.username = url.username || '';
