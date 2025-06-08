@@ -109,7 +109,7 @@ describe('Browser Utils Edge Cases Coverage', () => {
       const config: GlobalConfig = {
         launchOptions: {
           headless: true,
-          proxy: 'username:password@proxy-server-8080',
+          proxy: 'username:password@proxyhost-8080',
         },
       };
 

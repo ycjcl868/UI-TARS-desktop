@@ -4,7 +4,7 @@ import { parseProxyUrl, delayReject } from '../../src/utils/utils.js';
 describe('Utils Coverage Tests', () => {
   describe('parseProxyUrl function', () => {
     test('should parse proxy URL with username and password', () => {
-      const result = parseProxyUrl('username:password@proxy-server-8080');
+      const result = parseProxyUrl('username:password@proxyhost-8080');
       expect(result).toEqual({
         username: 'username',
         password: 'password',

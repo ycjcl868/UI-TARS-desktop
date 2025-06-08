@@ -4,7 +4,7 @@ import { parseProxyUrl, delayReject } from '../../src/utils/utils.js';
 describe('Complete Utils Coverage Tests', () => {
   describe('parseProxyUrl comprehensive coverage', () => {
     test('should parse HTTPS proxy URL with credentials', () => {
-      const result = parseProxyUrl('testuser:testpass@proxy-server-443');
+      const result = parseProxyUrl('testuser:testpass@proxyhost-443');
       expect(result).toEqual({
         username: 'testuser',
         password: 'testpass',
@@ -12,9 +12,7 @@ describe('Complete Utils Coverage Tests', () => {
     });
 
     test('should parse proxy URL with special characters in credentials', () => {
-      const result = parseProxyUrl(
-        'user%40domain:p%40ssw0rd@proxy-server-8080',
-      );
+      const result = parseProxyUrl('user%40domain:p%40ssw0rd@proxyhost-8080');
       expect(result).toEqual({
         username: 'user%40domain',
         password: 'p%40ssw0rd',
@@ -22,7 +20,7 @@ describe('Complete Utils Coverage Tests', () => {
     });
 
     test('should handle proxy URL with only username', () => {
-      const result = parseProxyUrl('testuser@proxy-server-8080');
+      const result = parseProxyUrl('testuser@proxyhost-8080');
       expect(result).toEqual({
         username: 'testuser',
         password: '',
